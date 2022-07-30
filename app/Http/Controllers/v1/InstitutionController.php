@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers\v1;
 
+
 use Throwable;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 class InstitutionController extends Controller
 {
     public function listAllInstitutions(Request $request)
     {
         $base_url = config('services.elucidate.base_url'). '/institutions';
+
         try{
             $response =  Http::withToken($request->bearerToken())->get($base_url);
             if($response->successful())
-                return response()->json([
-                    'status' => $response->statusCode,
-                    'data' => $response->data
-                ]);
-            
+               $this->responseBody($response);
         }catch(Throwable $e){
             report($e);
         }
@@ -29,7 +28,7 @@ class InstitutionController extends Controller
 
     public function searchInstitution(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'fullSearch' => 'required|string'
         ]);
 
@@ -39,10 +38,7 @@ class InstitutionController extends Controller
                         ->accept('application/json')
                         ->get($base_url);
             if($response->successful()){
-                return response()->json([
-                    'status' => 200,
-                    'data' => $response->data
-                ]);
+               $this->responseBody($response);
             }else if(optional($response)->statusCode == 404){
                 $base_url = config('elucidate.base_url').'/tickets';
                 $response =  Http::withToken($request->bearerToken())
@@ -54,9 +50,21 @@ class InstitutionController extends Controller
                             'createdAt' => Carbon::now()->toDateTimeString(),
                             'updatedAt' => Carbon::now()->toDateTimeString()
                         ]);
+
+                if($response->successful())
+                    $this->responseBody($response);
             }
         }catch (Throwable $e){
             report($e);
         }
+    }
+
+
+    private function responseBody($response)
+    {
+        return response()->json([
+            'status' => $response->statusCode ?? $response->status_code,
+            'data' => $response->data
+        ]);
     }
 }
