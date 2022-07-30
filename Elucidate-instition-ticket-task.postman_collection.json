@@ -1,0 +1,54 @@
+{
+	"info": {
+		"_postman_id": "11fd6025-80a6-4ee0-bc16-69ae0835d3b9",
+		"name": "Elucidate-instition-ticket-task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "Search institution",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.dev.elucidate.co/institutions?fullSearch=XXX",
+					"protocol": "https",
+					"host": [
+						"api",
+						"dev",
+						"elucidate",
+						"co"
+					],
+					"path": [
+						"institutions"
+					],
+					"query": [
+						{
+							"key": "fullSearch",
+							"value": "XXX"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all institution",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		}
+	]
+}
