@@ -43,7 +43,7 @@ class InstitutionController extends Controller
                     'status' => 200,
                     'data' => $response->data
                 ]);
-            }else if($response->statusCode == 404){
+            }else if(optional($response)->statusCode == 404){
                 $base_url = config('elucidate.base_url').'/tickets';
                 $response =  Http::withToken($request->bearerToken())
                         ->accept('application/json')
@@ -51,8 +51,8 @@ class InstitutionController extends Controller
                             'project' => 'Project '. rand(),
                             'title' => $request->fullSearch . ' missing institution',
                             'description' => 'add institution '. $request->fullSearch,
-                            'createdAt' => Carbon::now(),
-                            'updatedAt' => Carbon::now()
+                            'createdAt' => Carbon::now()->toDateTimeString(),
+                            'updatedAt' => Carbon::now()->toDateTimeString()
                         ]);
             }
         }catch (Throwable $e){
