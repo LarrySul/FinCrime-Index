@@ -16,20 +16,33 @@ iii. Report a missing institution if not found in search
 
 ### Requirements <hr >
 
-i. Download PHP V7 and above.
+i. Download <a href="https://www.php.net/downloads.php"> PHP V7 </a> and above.
 
-ii. Install Composer
+ii. Install <a href="https://getcomposer.org/download/"> Composer </a>
 
 
 ### Steps to run locally 🧑‍💻👩‍💻
 
 i. Clone this repository:
 
-``` git clone https://github.com/LarrySul/FinCrime-Index```
+```
+git clone https://github.com/LarrySul/FinCrime-Index
+```
 
 ii. Install dependencies:
 
-```composer install```
-
+```
+composer install
+```
 
 iii. Import the postman collection attach to the repository into your postman to call endpoint 
+
+
+iv. Add the *ELUCIDATE_BASE_URL* to the .env file althought a fallback(https://api.dev.elucidate.co/) is used if this variable is not set.
+
+
+v. Generate the application key using the artisan command
+
+```
+php artisan key:generate
+```
